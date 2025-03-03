@@ -16,7 +16,7 @@ export class UsersService {
     private userRepository: Repository<Users>,
   ) {}
 
-  async getUser(username: string) {
+  async getUser(username: string): Promise<Users> {
     const user = await this.userRepository.findOne({
       where: { username: username },
     });
@@ -28,7 +28,7 @@ export class UsersService {
     return user;
   }
 
-  async createUser(userDto: createUserDto) {
+  async createUser(userDto: createUserDto): Promise<Users> {
     // check if there is already a user
     const user = await this.userRepository.findOne({
       where: { username: userDto.username },
