@@ -22,7 +22,19 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new NotFoundException('There is no user with that username');
+      throw new NotFoundException('There is no user with that name');
+    }
+
+    return user;
+  }
+
+  async getUserById(userid: number): Promise<Users> {
+    const user = await this.userRepository.findOne({
+      where: { userid: userid },
+    });
+
+    if (!user) {
+      throw new NotFoundException('There is no user with that id');
     }
 
     return user;
