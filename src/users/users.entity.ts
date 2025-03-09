@@ -1,7 +1,9 @@
+import { Passwords } from 'src/passwords/passwords.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -24,6 +26,9 @@ export class Users {
     nullable: false,
   })
   password: string;
+
+  @OneToMany(() => Passwords, (password) => password.user)
+  passwords: Passwords[];
 
   @CreateDateColumn()
   createdat: Date;
