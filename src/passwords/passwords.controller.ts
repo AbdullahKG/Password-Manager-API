@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Body, Delete, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Delete, UseGuards } from '@nestjs/common';
 import { PasswordsService } from './passwords.service';
 import { createPasswordDto } from './dtos/create-password.dto';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
 
 @Controller('passwords')
+@UseGuards(AuthGuard)
 export class PasswordsController {
   constructor(private readonly passwordService: PasswordsService) {}
 
