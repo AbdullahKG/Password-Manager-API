@@ -77,6 +77,34 @@ export class PasswordsService {
     };
   }
 
+  async updatePassword(
+    userid: number,
+    siteName: string,
+    newPassword: string,
+  ): Promise<{
+    message: string;
+    statusCode: number;
+  }> {
+    // Fetch the password record for the specified user and site
+    const passwordRecord = await this.passwordRepository.findOne({
+      where: { user: { userid }, siteName },
+    });
+
+    if (!passwordRecord) {
+      throw new NotFoundException('no password record was found');
+    }
+
+    // update only the site password
+    passwordRecord.sitePassword = newPassword;
+
+    await this.passwordRepository.save(passwordRecord);
+
+    return {
+      message: 'password updated successfully for the specified site',
+      statusCode: 200,
+    };
+  }
+
   private async isSiteEmailUsedForSameSite(
     passwordDto: createPasswordDto,
   ): Promise<boolean> {
