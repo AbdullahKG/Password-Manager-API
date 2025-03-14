@@ -1,10 +1,4 @@
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsNumber,
-  IsString,
-  MinLength,
-} from 'class-validator';
+import { IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class createPasswordDto {
   @IsNumber()
@@ -21,8 +15,5 @@ export class createPasswordDto {
 
   @IsString()
   @IsNotEmpty()
-  @MinLength(8, {
-    message: 'password should be more than or eqaul to 8 characters',
-  })
   sitePassword: string;
 }
