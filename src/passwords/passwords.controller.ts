@@ -40,7 +40,7 @@ export class PasswordsController {
   }
 
   @Patch()
-  async upadatePassword(
+  async updatePassword(
     @Req() req: userRerquest,
     @Body('siteName') siteName: string,
     @Body('newPassword') newPassword: string,
