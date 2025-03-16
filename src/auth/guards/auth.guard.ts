@@ -28,7 +28,12 @@ export class AuthGuard implements CanActivate {
         secret: this.configService.get<string>('JWT_SECRET'),
       });
 
-      request.users = payload;
+      request.users = {
+        userid: payload.sub,
+        username: payload.username,
+        iat: payload.iat,
+        exp: payload.exp,
+      };
     } catch {
       throw new UnauthorizedException('you dont have permissions');
     }
