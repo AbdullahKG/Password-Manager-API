@@ -7,6 +7,7 @@ import {
   UseGuards,
   Req,
   Patch,
+  Param,
 } from '@nestjs/common';
 import { PasswordsService } from './passwords.service';
 import { createPasswordDto } from './dtos/create-password.dto';
@@ -23,15 +24,26 @@ export class PasswordsController {
     return await this.passwordService.getUserPasswords(req.users.userid);
   }
 
+  @Get(':siteName')
+  async getSpecificPassword(
+    @Req() req: userRerquest,
+    @Param('siteName') siteName: string,
+  ) {
+    return await this.passwordService.getSpecificPassword(
+      req.users.userid,
+      siteName,
+    );
+  }
+
   @Post()
   async createPassword(@Body() passwordDto: createPasswordDto) {
     return await this.passwordService.createPassword(passwordDto);
   }
 
-  @Delete()
+  @Delete(':siteName')
   async deletePassword(
     @Req() req: userRerquest,
-    @Body('siteName') siteName: string,
+    @Param('siteName') siteName: string,
   ) {
     return await this.passwordService.deletePassword(
       req.users.userid,
