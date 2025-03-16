@@ -31,6 +31,21 @@ export class PasswordsService {
     return password;
   }
 
+  async getSpecificPassword(
+    userid: number,
+    siteName: string,
+  ): Promise<Passwords> {
+    const password = await this.passwordRepository.findOne({
+      where: { user: { userid: userid }, siteName: siteName },
+    });
+
+    if (!password) {
+      throw new NotFoundException('there is no password saved for this site');
+    }
+
+    return password;
+  }
+
   async createPassword(passwordDto: createPasswordDto): Promise<Passwords> {
     // check if there is a user before
     const user = await this.userService.getUserById(passwordDto.userid); // the check is in user service
