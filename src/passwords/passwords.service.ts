@@ -34,8 +34,8 @@ export class PasswordsService {
   async getSpecificPassword(
     userid: number,
     siteName: string,
-  ): Promise<Passwords> {
-    const password = await this.passwordRepository.findOne({
+  ): Promise<Passwords[]> {
+    const password = await this.passwordRepository.find({
       where: { user: { userid: userid }, siteName: siteName },
     });
 
@@ -46,9 +46,12 @@ export class PasswordsService {
     return password;
   }
 
-  async createPassword(passwordDto: createPasswordDto): Promise<Passwords> {
+  async createPassword(
+    passwordDto: createPasswordDto,
+    userid: number,
+  ): Promise<Passwords> {
     // check if there is a user before
-    const user = await this.userService.getUserById(passwordDto.userid); // the check is in user service
+    const user = await this.userService.getUserById(userid); // the check is in user service
 
     // check if site email is already used for the same site
     const check = await this.isSiteEmailUsedForSameSite(passwordDto);
@@ -71,6 +74,7 @@ export class PasswordsService {
   async deletePassword(
     userid: number,
     siteName: string,
+    siteEmail: string,
   ): Promise<{
     message: string;
     statusCode: number;
@@ -78,6 +82,7 @@ export class PasswordsService {
     const deletePassword = await this.passwordRepository.delete({
       user: { userid: userid },
       siteName,
+      siteEmail,
     });
 
     if (deletePassword.affected === 0) {

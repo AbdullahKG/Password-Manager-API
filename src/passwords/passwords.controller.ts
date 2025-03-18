@@ -36,18 +36,26 @@ export class PasswordsController {
   }
 
   @Post()
-  async createPassword(@Body() passwordDto: createPasswordDto) {
-    return await this.passwordService.createPassword(passwordDto);
+  async createPassword(
+    @Body() passwordDto: createPasswordDto,
+    @Req() req: userRerquest,
+  ) {
+    return await this.passwordService.createPassword(
+      passwordDto,
+      req.users.userid,
+    );
   }
 
-  @Delete(':siteName')
+  @Delete(':siteName/:siteEmail')
   async deletePassword(
     @Req() req: userRerquest,
     @Param('siteName') siteName: string,
+    @Param('siteEmail') siteEmail: string,
   ) {
     return await this.passwordService.deletePassword(
       req.users.userid,
       siteName,
+      siteEmail,
     );
   }
 
