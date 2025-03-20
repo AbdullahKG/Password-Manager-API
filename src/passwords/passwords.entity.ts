@@ -19,7 +19,7 @@ export class Passwords {
   @Column({ type: 'varchar', nullable: false })
   siteEmail: string;
 
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: 'text', nullable: false })
   sitePassword: string;
 
   @ManyToOne(() => Users, (user) => user.passwords, { nullable: false })
