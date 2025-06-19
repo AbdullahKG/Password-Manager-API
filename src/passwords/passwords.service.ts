@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { NumericType, Repository } from 'typeorm';
+import { Repository, ILike } from 'typeorm';
 import { Passwords } from './passwords.entity';
 import { createPasswordDto } from './dtos/create-password.dto';
 import { UsersService } from 'src/users/users.service';
@@ -36,7 +36,7 @@ export class PasswordsService {
     siteName: string,
   ): Promise<Passwords[]> {
     const password = await this.passwordRepository.find({
-      where: { user: { userid: userid }, siteName: siteName },
+      where: { user: { userid: userid }, siteName: ILike(`%${siteName}%`) },
     });
 
     if (!password) {
