@@ -64,11 +64,13 @@ export class PasswordsController {
     @Req() req: userRerquest,
     @Body('siteName') siteName: string,
     @Body('newPassword') newPassword: string,
+    @Body('siteEmail') siteEmail: string,
   ) {
     return await this.passwordService.updatePassword(
       req.users.userid,
       siteName,
       newPassword,
+      siteEmail,
     );
   }
 }

@@ -101,13 +101,14 @@ export class PasswordsService {
     userid: number,
     siteName: string,
     newPassword: string,
+    siteEmail: string,
   ): Promise<{
     message: string;
     statusCode: number;
   }> {
     // Fetch the password record for the specified user and site
     const passwordRecord = await this.passwordRepository.findOne({
-      where: { user: { userid }, siteName: ILike(`%${siteName}%`) },
+      where: { user: { userid }, siteName: ILike(`%${siteName}%`), siteEmail },
     });
 
     if (!passwordRecord) {
