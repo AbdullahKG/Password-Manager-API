@@ -107,7 +107,7 @@ export class PasswordsService {
   }> {
     // Fetch the password record for the specified user and site
     const passwordRecord = await this.passwordRepository.findOne({
-      where: { user: { userid }, siteName },
+      where: { user: { userid }, siteName: ILike(`%${siteName}%`) },
     });
 
     if (!passwordRecord) {
